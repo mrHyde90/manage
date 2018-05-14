@@ -3,7 +3,8 @@ const app = express();
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser"); 
 const http = require("http");
-const objectRoute = require("./server/routes/apiObjects");
+const toolRoute = require("./server/routes/apiTool");
+const Tool = require("./server/models/tool");
 
 //base de datos
 const url = "mongodb://localhost/administrador";
@@ -35,7 +36,7 @@ app.use((req, res, next) => {
 //seed();
 
 //ROUTES
-app.use("/", objectRoute);
+app.use("/", toolRoute);
 
 app.get("*", (req, res) => {
   res.sendFile(__dirname + '/dist/index.html');
