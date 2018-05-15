@@ -5,6 +5,8 @@ const bodyParser = require("body-parser");
 const http = require("http");
 const toolRoute = require("./server/routes/apiTool");
 const Tool = require("./server/models/tool");
+const seedDB = require("./server/seed");
+const deleteDB = require("./server/deleteDB");
 
 //base de datos
 const url = "mongodb://localhost/administrador";
@@ -33,10 +35,12 @@ app.use((req, res, next) => {
 });
 
 //Seeding the database
-//seed();
+seedDB();
+//Delete
+//deleteDB();
 
 //ROUTES
-app.use("/", toolRoute);
+app.use("/api/object", toolRoute);
 
 app.get("*", (req, res) => {
   res.sendFile(__dirname + '/dist/index.html');
