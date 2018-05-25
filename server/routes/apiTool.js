@@ -1,72 +1,21 @@
-var express = require("express");
-var router = express.Router();
-var Tool = require("../models/tool");
+const express = require("express");
+const router = express.Router();
+
+const ToolsController = require("../controllers/apiTool");
 
 //INDEX
-router.get("/", (req, res, next) => {
-	Tool.find({})
-	.exec()
-	.then(foundTools => {
-		const newTools = foundTools.map(foundTool => {
-			return {
-				_id: foundTool._id,
-				name: foundTool.name,
-				toolImage: foundTool.toolImage,
-				cantidad: foundTool.cantidad,
-				created_at: foundTool.created_at
-			}
-		});
-		res.status(200).json(newTools);
-	})
-	.catch(err => res.status(500).json({error: err}))
-});
+router.get("/", ToolsController.tools_get_all)
 
 //SHOW
-router.get("/:id", (req, res, next) => {
-	const id = req.params.id;
-	Tool.findById(id)
-	.exec()
-	.then(foundTool => {
-		res.status(200).json({
-			_id: foundTool._id,
-			name: foundTool.name,
-			toolImage: foundTool.toolImage,
-			cantidad: foundTool.cantidad,
-			created_at: foundTool.created_at
-		});
-	})
-	.catch(err => res.status(500).json({error: err}))
-});
+router.get("/:id", ToolsController.tools_get_tool)
 
 //CREATE
-router.post("/", (req, res, next) => {
-	var newTool = new Tool({
-		name: req.body.name,
-		toolImage: req.body.toolImage,
-		cantidad: req.body.cantidad
-	});
-
-	newTool.save()
-	.then(result => res.status(201).json({message: "new tool created"}))
-	.catch(err => res.status(500).json({error: err}))
-});
+router.post("/", ToolsController.tools_create_tool)
 
 //UPDATE
-router.patch("/:id", (req, res, next) => {
-	const id = req.params.id;
-	Tool.update({_id: id}, {$set: {name: req.body.name, cantidad: req.body.cantidad, toolImage: req.body.toolImage}})
-	.exec()
-	.then(result => res.status(200).json({message: "tool updated!"}))
-	.catch(err => res.status(500).json({error: err}))
-});
+router.patch(":id", ToolsController.tools_update_tool)
 
 //DELETE
-router.delete("/:id", (req, res, next) => {
-	const id = req.params.id;
-	Tool.remove({_id: id})
-	.exec()
-	.then(result => res.status(200).json({message: "tool deleted"}))
-	.catch(err => res.status(500).json({error: err}))
-});
+router.delete("/:id", ToolsController.tools_delete_tool)
 
 module.exports = router;
