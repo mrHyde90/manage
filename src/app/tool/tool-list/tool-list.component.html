@@ -1,12 +1,12 @@
 <div class="row">
-	<div class="col-3" *ngFor="let toolItem of tools" id="separador">
+	<div class="col-3" *ngFor="let toolItem of tools; let i = index" id="separador">
 		<div class="card"  >
   	<img class="card-img-top" [src]="toolItem.toolImage" alt="Card image cap">
   	<div class="card-body">
     	<h5 class="card-title">{{toolItem.name}}</h5>
     	<p class="card-text"><b>Cantidad:</b> {{toolItem.cantidad}}</p>
     	<p class="card-text"><b>Categorias:</b> {{toolItem.categories}}</p>
-    	<a href="#" class="btn btn-primary">Prestar</a>
+    	<a  class="btn btn-primary" (click)="onShowModal(i)" >Prestar</a>
   	</div>
 	</div>	
 	</div>

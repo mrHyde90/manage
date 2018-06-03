@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ToolModel} from '../tool-model';
+import {ModalService} from '../../shared/modal/modal.service';
 
 @Component({
   selector: 'app-tool-list',
@@ -15,9 +16,16 @@ export class ToolListComponent implements OnInit {
 		{name: "Cargador", toolImage: "https://images-na.ssl-images-amazon.com/images/I/61j%2B0A3cxBL._SL1500_.jpg", cantidad: 4, categories: ["Transistores"], created_at: new Date(1995,11,17)}
 	];
 
-  constructor() { }
+  constructor(private modalService: ModalService) { }
 
   ngOnInit() {
+  	
+  }
+
+  onShowModal(index: number){
+
+  	this.modalService.handleModal("Articulo", 
+  		{name: this.tools[index].name, cantidad: this.tools[index].cantidad});
   }
 
 }

@@ -1,0 +1,30 @@
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" [attr.aria-hidden]="show ? null : true" [ngClass]="{'show': show}" [ngStyle]="{'display': display, 'padding-right.px': 17}" >
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">{{modelo.modalTitle}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onCloseModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Nombre: <b>{{modelo.modalContent.name}}</b></p>
+        <p>Existentes: <b>{{modelo.modalContent.cantidad}}</b></p>
+        <div [ngStyle]="{'display': modelo.modalContent.cantidad == 0 ? 'none' : 'block' }">
+        	<p>Cantidad a prestar: (Unicamente 1 o 2 digitos)</p><input type="number" class="form-control" [disabled]="modelo.modalContent.cantidad == 0" #inputPrestar>	
+        </div>
+        <div [ngStyle]="{'display': modelo.modalContent.cantidad == 0 ? 'block' : 'none' }">
+        	<p><b>Por ahora no se encuentra el articulo</b></p>
+        </div>
+        <div [ngStyle]="{'display': buenFormato ? 'none' : 'block'}">
+        	<p><b>{{textoFormato}}</b></p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="onCloseModal()">Close</button>
+        <button type="button" class="btn btn-primary" [disabled]="modelo.modalContent.cantidad == 0" (click)="saveChanges()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
